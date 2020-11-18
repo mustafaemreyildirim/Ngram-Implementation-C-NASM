@@ -1,6 +1,6 @@
-; ebp-44 -> tekrar
-; ebp-40 -> tekrar_say_iki
-; ebp-36 -> tekrar_say
+; ebp-44 -> again
+; ebp-40 -> sec_count
+; ebp-36 -> count_a
 ; ebp-32 -> size_2 - n
 ; ebp-28 -> size_1 - n
 ; ebp-24 -> i
@@ -27,7 +27,7 @@ n_gram:
         mov     dword [ebp-4], 0                ; sub_score = 0
         mov     dword [ebp-8], 0                ; score = 0
         mov     dword [ebp-12], 0               ; divider = 0
-        mov     dword [ebp-36], 0               ; tekrar_say = 0
+        mov     dword [ebp-36], 0               ; count_a = 0
 
         mov     edx, dword [ebp+12]             ; edx = size_1
         sub     edx, dword [ebp+24]             ; edx = size_1 - n
@@ -56,11 +56,11 @@ l4_cnt: mov     edx, dword [ebp-28]             ; edx = size_1 - n
         jl      l4_dis                          ; size_1 - n < j -> l4_dis
         jmp     l4_ici
 
-l4_dis: mov     dword [ebp-40], 0               ; tekrar_say_iki = 0
+l4_dis: mov     dword [ebp-40], 0               ; sec_count = 0
         mov     dword [ebp-20], 0               ; j = 0
         jmp     l2_cnt
 
-l4_ici: mov     dword [ebp-44], 0               ; tekrar = 0
+l4_ici: mov     dword [ebp-44], 0               ; again = 0
         mov     dword [ebp-16], 0               ; k = 0
         jmp     l5_cnt
 
@@ -83,18 +83,18 @@ l5_ici: mov     eax, dword [ebp-16]             ; eax = k
         jz      i3_ici
         jmp     i3_dis
 
-i3_ici: inc     dword [ebp-44]                  ; tekrar++
+i3_ici: inc     dword [ebp-44]                  ; again++
         jmp     i3_dis
 
 i3_dis: inc     dword [ebp-16]                  ; k++
         jmp     l5_cnt
 
-l5_dis: mov     eax, dword[ebp-44]              ; eax = tekrar
-        cmp     eax, dword[ebp+24]              ; cmp tekrar, n
-        jz      i4_ici                          ; tekrar == n -> i4_ici
+l5_dis: mov     eax, dword[ebp-44]              ; eax = again
+        cmp     eax, dword[ebp+24]              ; cmp again, n
+        jz      i4_ici                          ; again == n -> i4_ici
         jmp     i4_dis
 
-i4_ici: inc     dword [ebp-36]                  ; tekrar_say++
+i4_ici: inc     dword [ebp-36]                  ; count_a++
         inc     dword [ebp-24]                  ; i++
         jmp     l1_cnt
 
@@ -106,15 +106,15 @@ l2_cnt: mov     edx, dword [ebp-32]             ; edx = ebp-32 = size_2 - n
         jl      l2_dis                          ; size_2 - n < j -> l2_dis
         jmp     l2_ici
 
-l2_dis: mov     eax, dword [ebp-40]             ; eax = tekrar_say_2
-        cmp     eax, 0                          ; cmp tekrar_say_2, 0
-        jg      i6_ici                          ; tekrar_say_2 > 0
+l2_dis: mov     eax, dword [ebp-40]             ; eax = count_a_2
+        cmp     eax, 0                          ; cmp count_a_2, 0
+        jg      i6_ici                          ; count_a_2 > 0
         jmp     i6_dis
 
 i6_ici: inc     dword [ebp-8]                   ; score++
-        mov     eax, dword [ebp-40]             ; eax = tekrar_say_iki
-        add     dword [ebp-36], eax             ; tekrar_say = tekrar_say + tekrar_say_iki
-        dec     dword [ebp-36]                  ; tekrar_say--
+        mov     eax, dword [ebp-40]             ; eax = sec_count
+        add     dword [ebp-36], eax             ; count_a = count_a + sec_count
+        dec     dword [ebp-36]                  ; count_a--
 
 i6_dis: inc     dword [ebp-24]                  ; i++
         jmp     l1_cnt
@@ -152,7 +152,7 @@ i1_ici: inc     dword [ebp-4]                   ; sub_score++
 i1_dis: inc     dword [ebp-16]                  ; k++
         jmp     l3_cnt
 
-i2_ici: inc     dword [ebp-40]                  ; tekrar_say_iki++
+i2_ici: inc     dword [ebp-40]                  ; sec_count++
         jmp     i2_dis
 
 i2_dis: mov     dword [ebp-4], 0                ; sub_score = 0
@@ -164,7 +164,7 @@ l1_dis: mov     eax, dword [ebp-28]             ; eax = size_1 - n
         add     eax, ebx                        ; eax = size_1 - n + size_2 - n
         add     eax, 2                          ; eax = size_1 - n + 1 + size_2 - n + 1
         sub     eax, dword [ebp-8]              ; eax = size_1 - n + 1 + size_2 - n + 1 - score
-        sub     eax, dword [ebp-36]             ; eax = size_1 - n + 1 + size_2 - n + 1 - score - tekrar_say
+        sub     eax, dword [ebp-36]             ; eax = size_1 - n + 1 + size_2 - n + 1 - score - count_a
         mov     dword [ebp-12], eax             ; divider = size_1 - n + 1 + size_2 - n + 1 - score
         mov     eax, dword [ebp-8]              ; eax = score
         imul    eax, eax, 100                   ; eax = score * 100
