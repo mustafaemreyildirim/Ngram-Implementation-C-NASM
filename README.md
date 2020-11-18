@@ -2,7 +2,7 @@
 * This project aims to demonstrate the implementation of Ngram algorithm with given input argument.
 
 ### FILE FORMAT
-* Input file format should be in "-n_gram_size- -<string1- -string2-" format in each line. 
+* Input file format should be in "n_gram_size string1 string2" format in each line. 
 
 ### INCLUDED FILES
 * A main driver c file and an nasm implementation of n_gram function
