@@ -1,8 +1,3 @@
-; Group 18
-; Mustafa Emre YILDIRIM - 150160069
-; Zubeyir GENÇ - 150150136
-; Muhammed YILMAZ - 150150149
-;
 ; ebp-44 -> tekrar
 ; ebp-40 -> tekrar_say_iki
 ; ebp-36 -> tekrar_say
